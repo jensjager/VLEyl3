@@ -55,6 +55,9 @@
                             <a class="dropdown-item" href="#">Niisutus ja toitmine</a> 
                             <a class="dropdown-item" href="#">Koorijad ja maskid</a> 
                         </div> 
+                    </li>
+                    <li class="nav-item dropdown"> 
+                        <a class="nav-link" href="meist.html" id="meist">Meist</a> 
                     </li> 
                 </ul>
                 <!-- search -->
@@ -77,49 +80,181 @@
         </section>
         <!-- ostukorv -->
         <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 d-flex align-items-start flex-column">
-                        <div class="mb-auto p-2"><h4>Ostukorvis on 1 toode</h4></div>    
-                        <div class="mb-auto p-2 row">
-                            <div class="col-lg-6">
-                                <img src="soap.png" width="100%">
+            <div class="container flex-column d-flex justify-content-center">
+                <div class="mb-auto p-2"><h4 id="ostukorvTekst">Ostukorvis on 44 toode</h4></div>
+                <div id="tooted">
+                    <div class="card">
+                        <div class="card-body d-flex flex-row align-items-center justify-content-between">
+                            <div class="d-flex flex-column flex-md-row align-items-center" style="gap: 10px">
+                                <img src="soap.png" class="img-fluid rounded-3" style="width: 65px;">
+                                <h5>Toode 1</h5>
                             </div>
-                            <div class="col-lg-6">
-                                <p>15.99&#8364;</p>
-                                <p>Toode 1</p>
-                                    <select class="form-control col-lg-5 form-sm" id="kogus">
-                                        <option>0</option>
-                                        <option selected="selected">1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                    </select>
-                                <br/>
-                            </div>            
+                            <select class="form-control-sm" id="kogus">
+                                <option value="0">0</option>
+                                <option value="1" selected="selected">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                            <h5 class="tooteHind" id="maksumus1">15.99&#8364;</h5>
+                            <script>
+                                const kogus = document.getElementById('kogus');
+                                const hind = document.getElementById('maksumus1');
+                                var hinnaMuutus = new CustomEvent('hinnaMuutus', {
+                                    bubbles: true,
+                                    detail: hind
+                                });
+                                kogus.addEventListener('change', function () {
+                                    const tooteHind1 = parseFloat(kogus.value);
+                                    hind.textContent = (15.99 * tooteHind1).toFixed(2) + '€';
+                                    this.dispatchEvent(hinnaMuutus);
+                                });
+                                
+                            </script>
+                            <button class="btn" type="button"><svg class="lnr lnr-trash"><use xlink:href="#lnr-trash"></use></svg></button>                                  
                         </div>
-                        <div class="p-2">
-                            <p>Tarne: <span class="text-primary">tasuta</span></p>
-                            <p>Kokku: <span class="text-primary">15.99&#8364;</span></p>
+                    </div>  
+                    <div class="card">
+                        <div class="card-body d-flex flex-row align-items-center justify-content-between">
+                            <div class="d-flex flex-column flex-md-row align-items-center" style="gap: 10px">
+                                <img src="soap.png" class="img-fluid rounded-3" style="width: 65px;">
+                                <h5>Toode 2</h5>
+                            </div>
+                            <select class="form-control-sm" id="kogus2">
+                                <option value="0">0</option>
+                                <option value="1" selected="selected">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                            <h5 class="tooteHind" id="maksumus2">12.99&#8364;</h5>
+                            <script>
+                                const kogus2 = document.getElementById('kogus2');
+                                const hind2 = document.getElementById('maksumus2');
+                                var hinnaMuutus = new CustomEvent('hinnaMuutus', {
+                                    bubbles: true,
+                                    detail: hind2
+                                });
+                                kogus2.addEventListener('change', function () {
+                                    const tooteHind2 = parseFloat(kogus2.value);
+                                    hind2.textContent = (12.99 * tooteHind2).toFixed(2) + '€';
+                                    this.dispatchEvent(hinnaMuutus);
+                                });
+                            </script>
+                            <button class="btn" type="button"><svg class="lnr lnr-trash"><use xlink:href="#lnr-trash"></use></svg></button>                                  
                         </div>
-                        <div class="p-2 mx-auto">
-                            <a href="kinnitus.html" class="btn btn-dark btn-lg mb-3">Maksa</a>
+                    </div> 
+                </div>  
+                <script>
+                    var tooted = document.getElementById("tooted");
+                    var toodeteArv = tooted.childElementCount;
+                    var ostukorvTekst = document.getElementById("ostukorvTekst");
+                    var tekst = "Ostukorvis on " + toodeteArv;
+                    ostukorvTekst.textContent = toodeteArv > 1  ? tekst +" toodet" : tekst + " toode";
+                </script>
+                <div class="py-4 d-flex justify-content-between">
+                    <h4>Tarne: <span class="text-primary">tasuta</span></h4>
+                    <h4>Kokku: <span id="kokku" class="text-primary">15.99&#8364;</span></h4>
+                </div>
+                <div class="px-lg-5">
+                    <h4 class="mb-3">Arve Detailid</h4>
+                    <form class="needs-validation" novalidate="">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="eesnimi">Eesnimi</label>
+                                <input type="text" class="form-control" id="eesnimi">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="perenimi">Perenimi</label>
+                                <input type="text" class="form-control" id="perenimi">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                    <!-- TODO! --->
-                    </div>           
-                </div>   
+                        <div class="mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="aadress">Aadress</label>
+                            <input type="text" class="form-control" id="aadress">
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefoninumber">Telefoninumber</label>
+                            <input type="text" class="form-control" id="telefoninumber">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="riik">Riik</label>
+                                <select class="custom-select d-block w-100" id="riik">
+                                    <option>Eesti</option>
+                                    <option>Soome</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="zip">Zip-kood</label>
+                                <input type="text" class="form-control" id="zip">
+                            </div>
+                        </div>
+                        <hr class="mb-4">
+                        <h4 class="mb-3">Makse  </h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-name">Nimi Kaardil</label>
+                                <input type="text" class="form-control" id="cc-name">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-number">Kaardi Number</label>
+                                <input type="text" class="form-control" id="cc-number">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="kehtivusaeg">Kehtivusaeg</label>
+                                <input type="text" class="form-control" id="kehtivusaeg">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="cc-cvv">CVV</label>
+                                <input type="text" class="form-control" id="cc-cvv">
+                            </div>
+                        </div>
+                        <hr class="mb-4">
+                        <h4>Kokku: <span id="kokku2" class="text-primary">15.99&#8364;</span></h4>
+                        <script>
+                            window.onload = function () {
+                                var toodeteHinnad = tooted.querySelectorAll("h5.tooteHind");
+                                var kokku = 0;
+                                for (var i = 0; i < toodeteHinnad.length; i++) {
+                                    kokku += parseFloat(toodeteHinnad[i].innerText);
+                                }
+                                document.getElementById("kokku").innerHTML = kokku + "\&#8364";
+                                document.getElementById("kokku2").innerHTML = kokku + "\&#8364";
+                            };
+                            document.addEventListener('hinnaMuutus', function(event) {
+                                var toodeteHinnad = tooted.querySelectorAll("h5.tooteHind");
+                                var kokku = 0;
+                                for (var i = 0; i < toodeteHinnad.length; i++) {
+                                    kokku += parseFloat(toodeteHinnad[i].innerText);
+                                }
+                                document.getElementById("kokku").innerHTML = kokku + "\&#8364";;
+                                document.getElementById("kokku2").innerHTML = kokku + "\&#8364";;
+                            });
+                        </script>
+                        <button class="btn btn-dark btn-lg mb-3" type="submit">Maksa</button>
+                    </form>
+                </div>
             </div>
         </section>
         <!-- jalus -->
         <footer class="bg-light">
             <div class="container-fluid">
-                <div class="row">
-                    <!-- TODO! -->
-                    <div class="col-lg-12 text-center"><p>Footer</p></div>
+                <div class="row text-center text-muted">
+                    <h2 class="col-lg-12 text-uppercase">Bootstrap 4</h2>
+                    <div class="col-lg-12"><p>Lorem ipsum dolor sit amet. Et quaerat internos in quia voluptatibus et asperiores nisi est obcaecati sequi sit quis iusto aut doloribus natus. Aut suscipit quod sed corrupti sint est eveniet voluptas eos suscipit natus vel quia beatae qui rerum voluptatum et galisum quas. </p></div>
+                    <div class="container d-flex justify-content-around px-5 mt-3">
+                        <button type="button" class="btn btn-default p-0 m-0"><img src="facebook.png" alt="facebook"></button>
+                        <button type="button" class="btn btn-default p-0 m-0"><img src="twitter.png" alt="twitter"></button>
+                        <button type="button" class="btn btn-default p-0 m-0"><img src="linkedin.png" alt="linkedin"></button>
+                    </div>
                 </div>
             </div>
-        </footer>       
+        </footer>     
         <!-- jQuery, Popper.js, Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
